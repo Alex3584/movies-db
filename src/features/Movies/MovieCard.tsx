@@ -1,21 +1,28 @@
 import { Link } from "react-router-dom";
-
-import "./Movies.css"
+import styles from "./MovieCard.module.scss";
 
 interface MovieCardProps {
   id: number;
   title: string;
   overview: string;
   popularity: number;
- }
+}
 
-
-export function MovieCard({id, title, overview, popularity }: MovieCardProps) {
+export function MovieCard({ id, title, overview, popularity }: MovieCardProps) {
   return (
-    <div className="movies-card">
-      <Link to={`/movies/${id}`}>{title}</Link>
-      <div className="movies-card-overview">{overview}</div>
-      <div className="movies-card-popularity">{popularity}</div>
+    <div className={styles.card}>
+      <img
+        className={styles.thumbmail}
+        src="src/assets/movie-thumb.png"
+        alt="Movie thumbmail"
+      />
+      <div className={styles.content}>
+        <div>
+          <Link to={`/movies/${id}`}>{title}</Link>
+        </div>
+        <div className={styles.overview}>{overview}</div>
+        <div className={styles.popularity}>{popularity}</div>
+      </div>
     </div>
   );
 }
