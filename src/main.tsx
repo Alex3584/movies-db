@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 import { About } from "./features/About/About";
-import Movies from "./features/Movies/Movies";
+import Movies, {MoviesFetch} from "./features/Movies/Movies";
 import  store from "./store";
 import { Provider } from 'react-redux';
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/movies",
-        element: <Movies />,
+        element: <MoviesFetch />,
       },
     ],
   },
