@@ -1,47 +1,54 @@
 import configuration from "../configuration";
 
+const apiBasePath = `${configuration.apiUrl}/3`;
+
 async function get<TBody>(relativeUrl: string): Promise<TBody> {
-  const options = {
+  const headers = new Headers();
+  headers.append("Accept", "application/json");
+  headers.append("Authorization", `Bearer ${configuration.apiToken}`);
+
+  const requestOptions = {
     method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${configuration.apiToken}`,
-    },
+    headers: headers,
   };
 
-  const response = await fetch(
-    `${configuration.apiUrl}/3${relativeUrl}`,
-    options
-  );
-  const json: TBody = await response.json();
+  const response = await fetch(`${apiBasePath}${relativeUrl}`, requestOptions);
+  const value: TBody = await response.json();
 
-  return json;
+  return value;
+}
+interface PageResponse<TResult> { 
+  page: number;
+  results: TResult[];
+  total_pages: number;
+  total_results: number;
 }
 
-export interface MovieDetails {
+interface MovieDetails {
   id: number;
   title: string;
   popularity: number;
   overview: string;
-  backdrop_path: string;
-}
-
-interface PageResponse<TResult> { 
-  page: number;
-  results: TResult[];
+  backdrop_path?: string | null;
 }
 
 interface Configuration {
   images:{base_url: string};
 }
 
-export const client = {
-  async getConfiguration() {
-    return get<Configuration>("/configuration");
+interface ITmdbClient {
+  getConfiguration: () => Promise<Configuration>;
+  getNowPlaying: () => Promise<MovieDetails[]>;
+}
+
+export const client: ITmdbClient = {
+  getConfiguration: async () => {
+    const response = await get<Configuration>("/configuration");
+    return response;
   },
 
-async getNowPlaying(): Promise<MovieDetails[]> {
-    const response = await get<PageResponse<MovieDetails>>("/movie/now_playing?page=1");
+getNowPlaying: async () =>{
+    const response = await get<PageResponse<MovieDetails>>("/movie/now_playing");
 
     return response.results;
   },

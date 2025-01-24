@@ -5,29 +5,34 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
   Typography,
+  Tooltip,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-interface MovieCardProps {
+interface Props {
   id: number;
   title: string;
   overview: string;
   popularity: number;
+  enableUserActions?: boolean;
   image?: string;
 }
 
-export function MovieCard({
+function MovieCard({
   id,
   title,
   overview,
   popularity,
+  enableUserActions,
   image = "src/assets/movie-thumb.png",
-}: MovieCardProps) {
+}: Props) {
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia component="div" image={image} sx={{ pt: "56.25%" }} />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" component="h2" gutterBottom>
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -41,7 +46,15 @@ export function MovieCard({
         <Button component={RouterLink} to={`/movies/${id}`} color="secondary">
           Details
         </Button>
+        {enableUserActions && (<Tooltip title="Add to favorites">
+          <IconButton>
+            <FavoriteIcon />
+          </IconButton>
+        </Tooltip>
+        )}
       </CardActions>
     </Card>
   );
 }
+
+export default MovieCard;
