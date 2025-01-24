@@ -1,29 +1,43 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 import { About } from "./features/About/About";
-import Movies, {MoviesFetch} from "./features/Movies/Movies";
-import  store from "./store";
-import { Provider } from 'react-redux';
+import Movies from "./features/Movies/Movies";
+import store from "./store";
+import { Provider } from "react-redux";
+import Home from "./features/Home/Home";
+
+function AppEntrypoint() { 
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Provider store={store}>
-        <App />
-      </Provider>
-    ),
+    element: <AppEntrypoint />,
     children: [
       {
-        path: "/about",
-        element: <About />,
+        path: "/",
+        element: <Home />,
       },
       {
         path: "/movies",
-        element: <MoviesFetch />,
+        element: <Movies />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
