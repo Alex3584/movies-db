@@ -1,11 +1,14 @@
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import CountdownText from "./CountdownText";
+import { CountdownVideo } from "./CountdownVideo";
+import MapView from "./MapView";
 
 function About() {
   return (
     <Container sx={{ pe: 8 }} maxWidth="md">
-      <Typography variant="h5" align="center">
-        Comming soon...
-      </Typography>
+      <CountdownText />
+      <CountdownVideo />
+      <MapView/>
     </Container>
   );
 }
