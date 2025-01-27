@@ -1,7 +1,6 @@
 import { client } from "../../api/tmdb";
 import { ActionWithPayload, createReducer } from "../../redux/utils";
 import { AppThunk } from "../../store";
-
 export interface Movie {
   id: number;
   title: string;
@@ -13,11 +12,15 @@ export interface Movie {
 interface MoviesState {
   loading: boolean;
   top: Movie[];
+  page: number;
+  hasMorePages: boolean;
 }
 
 const initialState: MoviesState = {
   loading: false,
   top: [],
+  page: 0,
+  hasMorePages: true,
 };
 
 function loading() {
@@ -26,42 +29,54 @@ function loading() {
   };
 }
 
-function loaded(movies: Movie[]) {
+function loaded(movies: Movie[], page: number, hasMorePages: boolean) {
   return {
     type: "movies/loaded",
-    payload: movies,
+    payload: { movies, page, hasMorePages },
   };
 }
 
-// export type AppThunk<ReturnType> = ThunkAction<ReturnType, MoviesState, undefined, UnknownAction>;
-
-export function fetchMovies(): AppThunk<Promise<void>> {
+export function fetchNextPage(): AppThunk<Promise<void>> {
   return async (dispatch, getState) => {
+    const state = getState();
+    const nextPage = state.movies.page + 1;
+    dispatch(fetchPage(nextPage));
+  };
+}
+
+function fetchPage(page: number): AppThunk<Promise<void>> {
+  return async (dispatch) => {
     dispatch(loading());
 
     const configuration = await client.getConfiguration(); // todo: single load per app
-    const results = await client.getNowPlaying();
+    const nowPlaying = await client.getNowPlaying(page);
     const imageSize = "w780";
-    const movies: Movie[] = results.map((movie) => ({
+    const movies: Movie[] = nowPlaying.results.map((movie) => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
       popularity: movie.popularity,
-      image: movie.backdrop_path
-        ? `${configuration.images.base_url}${imageSize}${movie.backdrop_path}`
-        : undefined,
+      image: movie.backdrop_path ? `${configuration.images.base_url}${imageSize}${movie.backdrop_path}` : undefined,
     }));
 
-    dispatch(loaded(movies));
+    const hasMorePages = nowPlaying.page < nowPlaying.totalPages;
+
+    dispatch(loaded(movies, page, hasMorePages));
   };
 }
 
 const moviesReducer = createReducer<MoviesState>(initialState, {
-  "movies/loading": (state, action: ActionWithPayload<boolean>) => {
+  "movies/loading": (state) => {
     return { ...state, loading: true };
   },
-  "movies/loaded": (state, action: ActionWithPayload<Movie[]>) => {
-    return { ...state, loading: false, top: action.payload };
+  "movies/loaded": (state, action: ActionWithPayload<{ movies: Movie[]; page: number; hasMorePages: boolean }>) => {
+    return {
+      ...state,
+      top: [...state.top, ...action.payload.movies],
+      page: action.payload.page,
+      hasMorePages: action.payload.hasMorePages,
+      loading: false,
+    };
   },
 });
 
