@@ -44,18 +44,59 @@ interface Configuration {
   };
 }
 
+export interface KeywordItem {
+  id: number;
+  name: string;
+}
+
+export interface MoviesFilters {
+  keywords?: number[];
+  genres?: number[];
+}
+
 interface ITmbdClient {
   getConfiguration: () => Promise<Configuration>;
   getNowPlaying: (page: number) => Promise<PageDetails<MovieDetails>>;
+  getMovies: (page: number, filters: MoviesFilters) => Promise<PageDetails<MovieDetails>>;
+  getKeywords: (query: string) => Promise<KeywordItem[]>;
 }
 
 export const client: ITmbdClient = {
   getConfiguration: async () => {
     const response = await get<Configuration>("/configuration");
+
     return response;
   },
   getNowPlaying: async (page: number = 1) => {
     const response = await get<PageResponse<MovieDetails>>(`/movie/now_playing?page=${page}`);
+
+    return {
+      results: response.results,
+      totalPages: response.total_pages,
+      page: response.page,
+    };
+  },
+  getKeywords: async (query: string) => {
+    const response = await get<PageResponse<KeywordItem>>(`/search/keyword?query=${query}`);
+
+    return response.results;
+  },
+  getMovies: async (page: number, filters: MoviesFilters) => {
+    const params = new URLSearchParams({
+      page: page.toString(),
+    });
+
+    if (filters.keywords?.length) {
+      params.append("with_keywords", filters.keywords.join("|"));
+    }
+
+    if (filters.genres?.length) {
+      params.append("with_genres", filters.genres.join(","));
+    }
+
+    const query = params.toString();
+    const response = await get<PageResponse<MovieDetails>>(`/discover/movie?${query}`);
+
     return {
       results: response.results,
       totalPages: response.total_pages,
