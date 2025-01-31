@@ -98,4 +98,4 @@ const moviesReducer = createReducer<MoviesState>(initialState, {
   },
 });
 
-export default moviesReducer;
+export default moviesReducer
