@@ -4,12 +4,12 @@ import { AppBar, Box, Toolbar, Typography, Link, Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 
-interface AppHeaderProps {
+interface Props {
   onLogin(): void;
   onLogout(): void;
 }
 
-export function AppHeader({onLogin, onLogout}: AppHeaderProps) {
+export function AppHeader({ onLogin, onLogout }: Props) {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -21,6 +21,7 @@ export function AppHeader({onLogin, onLogout}: AppHeaderProps) {
           <nav>
             <HeaderLink to="/">Home</HeaderLink>
             <HeaderLink to="/movies">Movies</HeaderLink>
+            <HeaderLink to="/extra">Extra</HeaderLink>
             <HeaderLink to="/about">About</HeaderLink>
           </nav>
         </Box>
@@ -35,21 +36,17 @@ interface AuthSectionProps {
   onLogout(): void;
 }
 
-function AuthSection({ onLogin, onLogout }: AppHeaderProps) {
+function AuthSection({ onLogin, onLogout }: AuthSectionProps) {
   const auth = useContext(AuthContext);
-  const loggedIn = auth.user !== anonymousUser;
 
-  if (loggedIn) {
-    return (
-      <>
-        <Typography>Hello, {auth.user.name}!</Typography>
-        <Button color="inherit" variant="outlined" sx={{ ml: 1.5 }} onClick={onLogout}>
-          Log out
-        </Button>
-      </>
-    );
-  }
-  return (
+  return auth.user !== anonymousUser ? (
+    <>
+      <Typography>Hello, {auth.user.name}!</Typography>
+      <Button color="inherit" variant="outlined" sx={{ ml: 1.5 }} onClick={onLogout}>
+        Log out
+      </Button>
+    </>
+  ) : (
     <Button color="inherit" variant="outlined" onClick={onLogin}>
       Log in
     </Button>
