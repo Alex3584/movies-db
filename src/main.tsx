@@ -14,16 +14,19 @@ import Home from "./features/Home/Home";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { LinearProgress } from "@mui/material";
 import { Extra } from "./features/Extra/Extra";
+import { StatefulAuthProvider } from "./auth/StatefulAuthProvider";
 
 const Movies = lazy(() => import("./features/Movies/Movies"));
 
 function AppEntrypoint() {
   return (
-    <Provider store={store}>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </Provider>
+    <StatefulAuthProvider>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </Provider>
+    </StatefulAuthProvider>
   );
 }
 
@@ -46,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: "extra",
-        element: <Extra/>,
+        element: <Extra />,
       },
       {
         path: "/about",
