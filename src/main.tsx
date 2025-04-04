@@ -19,6 +19,8 @@ import { Authcallback } from "./auth/Authcallback";
 import { Profile } from "./features/Profile/Profile";
 import { AuthenticationGuard } from "./auth/AuthenticationGuard";
 import { Protected } from "./features/Protected/Protected";
+import { MovieDetails } from "./features/Movies/MovieDetails";
+
 
 const Movies = lazy(() => import("./features/Movies/Movies"));
 
@@ -50,6 +52,11 @@ const router = createBrowserRouter([
             <Movies />
           </Suspense>
         ),
+      },
+      {
+        path: "/movies/:id",
+        element: <MovieDetails />,
+        errorElement: <ErrorBoundary />,
       },
       {
         path: "extra",

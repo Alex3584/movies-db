@@ -13,6 +13,8 @@ export interface MovieDetails {
   overview: string;
   popularity: number;
   backdrop_path?: string | null;
+  poster_path?: string | null;
+  release_date?: string;
 }
 
 export interface MoviesState {
@@ -114,7 +116,10 @@ export const tmdbApi = createApi({
       query: () => "/genre/movie/list",
       transformResponse: (response: { genres: Genre[] }) => response.genres,
     }),
+    getMovieDetails: builder.query<MovieDetails, number>({
+      query: (id) => `/movie/${id}`,
+    }),
   }),
 });
 
-export const { useGetConfigurationQuery, useGetGenresQuery, useGetKeywordsQuery, useGetMoviesQuery } = tmdbApi;
+export const { useGetConfigurationQuery, useGetGenresQuery, useGetKeywordsQuery, useGetMoviesQuery, useGetMovieDetailsQuery, } = tmdbApi;
