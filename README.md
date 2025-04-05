@@ -194,7 +194,7 @@ Below will be placed UI screenshots to illustrate key features and pages of the 
 
 - 📱 Mobile responsiveness demo -->
 
-# React + TypeScript + Vite
+<!-- # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -243,4 +243,4 @@ export default tseslint.config({
     ...react.configs['jsx-runtime'].rules,
   },
 })
-```
+``` -->
