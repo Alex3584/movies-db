@@ -75,6 +75,91 @@ The project is built with **React + TypeScript + Vite**, focusing on scalability
 
 ---
 
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository:
+
+```bash
+git clone https://github.com/Alex3584/movies-db.git
+cd movies-db
+```
+
+### 2. Install dependencies:
+
+#### ✅ Install Runtime Dependencies
+These packages are required for the application to function properly in production:
+
+```bash
+npm install \
+  @auth0/auth0-react \
+  @emotion/react \
+  @emotion/styled \
+  @fontsource/roboto \
+  @mui/icons-material \
+  @mui/material \
+  @redux-devtools/extension \
+  @reduxjs/toolkit \
+  @rtk-query/graphql-request-base-query \
+  @testing-library/react \
+  graphql \
+  http-proxy-middleware \
+  leaflet \
+  react \
+  react-dom \
+  react-hook-form \
+  redux-thunk
+```
+
+#### 🧪 Install Development Dependencies
+These packages are used during development for linting, typing, SCSS support, building, and running the application:
+
+```bash
+npm install -D \
+  @eslint/js \
+  @types/leaflet \
+  @types/node \
+  @types/react \
+  @types/react-dom \
+  @vitejs/plugin-react \
+  eslint \
+  eslint-plugin-react-hooks \
+  eslint-plugin-react-refresh \
+  globals \
+  sass \
+  typescript \
+  typescript-eslint \
+  vite
+
+```
+
+### 3. Set up environment variables:
+
+Create a `.env` file in the root directory:
+
+```ini
+VITE_TMDB_API_KEY=your_tmdb_api_key
+VITE_AUTH0_DOMAIN=your_auth0_domain
+VITE_AUTH0_CLIENT_ID=your_auth0_client_id
+```
+
+### 4. Start the development server:
+
+```bash
+npm run dev
+```
+
+## 🧪 Scripts
+
+- `npm run dev` -	Start the app in development mode
+
+- `npm run build` -	Build the project for production
+
+- `npm run preview` -	Preview the production build
+
+- `npm run lint` -	Lint the code using ESLint rules
+
+- `npm run format` -	Apply code formatting (if Prettier is added)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
