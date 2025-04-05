@@ -166,16 +166,16 @@ Below will be placed UI screenshots to illustrate key features and pages of the 
 
 - 📍 Home / Search Page with film cards
 
-![Search Page](./assets/movies-1.png)
+![Search Page](./src/assets/movies-1.png)
 
 - 🎬 Movie Details page
 
-![Search Page](./assets/movies-2.png)
-![Search Page](./assets/movies-4.png)
+![Search Page](./src/assets/movies-2.png)
+![Search Page](./src/assets/movies-4.jpg)
 
 - 🎞️ Filter by Genre
 
-![Search Page](./assets/movies-3.png)
+![Search Page](./src/assets/movies-3.png)
 
 <!-- - 🌙 Dark Mode (if supported) – theme variation preview
 
