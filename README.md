@@ -160,6 +160,29 @@ npm run dev
 
 - `npm run format` -	Apply code formatting (if Prettier is added)
 
+## 🖼️ Screenshots
+
+Below will be placed UI screenshots to illustrate key features and pages of the application.
+
+- 📍 Home / Search Page with film cards
+
+![Search Page](./assets/movies-1.png)
+
+- 🎬 Movie Details page
+
+![Search Page](./assets/movies-2.png)
+![Search Page](./assets/movies-4.png)
+
+- 🎞️ Filter by Genre
+
+![Search Page](./assets/movies-3.png)
+
+<!-- - 🌙 Dark Mode (if supported) – theme variation preview
+
+- 🔐 Auth flow (login/logout via Auth0)
+
+- 📱 Mobile responsiveness demo -->
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
