@@ -168,6 +168,8 @@ Below will be placed UI screenshots to illustrate key features and pages of the 
 
 ![Search Page](./src/assets/movies-1.jpg)
 
+<img src="./src/assets/movies-1.jpg" alt="Filter by Genre" width="600" height="auto" />
+
 - 🎬 Movie Details page
 
 ![Search Page](./src/assets/movies-2.jpg)
