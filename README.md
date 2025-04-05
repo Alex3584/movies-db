@@ -164,18 +164,29 @@ npm run dev
 
 Below will be placed UI screenshots to illustrate key features and pages of the application.
 
-- 📍 Home / Search Page with film cards
+<table>
+  <tr> 
+    <td> 
+      <strong>📍 Home / Search Page</strong><br /> 
+      <img src="./src/assets/movies-1.jpg" alt="Home Page" width="400" /> 
+    </td> 
+    <td> 
+      <strong>🎬 Movie Details Page</strong><br /> 
+      <img src="./src/assets/movies-2.jpg" alt="Movie Details" width="400" /> 
+    </td> 
+  </tr> 
+  <tr> 
+    <td> 
+      <strong>🎬 Movie Details Page (Cast Section)</strong><br />
+      <img src="./src/assets/movies-4.jpg" alt="Movie Cast" width="400" /> 
+    </td> 
+    <td> 
+      <strong>🎞️ Filter by Genre</strong><br />
+      <img src="./src/assets/movies-3.jpg" alt="Filter by Genre" width="400" />
+    </td> 
+  </tr> 
+</table>
 
-<img src="./src/assets/movies-1.jpg" alt="Home Page" width="600" height="auto" />
-
-- 🎬 Movie Details page
-
-<img src="./src/assets/movies-2.jpg" alt="Movie Details page" width="600" height="auto" />
-<img src="./src/assets/movies-4.jpg" alt="Movie Details page" width="600" height="auto" />
-
-- 🎞️ Filter by Genre
-
-<img src="./src/assets/movies-3.jpg" alt="Filter by Genre" width="600" height="auto" />
 
 <!-- - 🌙 Dark Mode (if supported) – theme variation preview
 
