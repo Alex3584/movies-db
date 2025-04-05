@@ -1,14 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  Avatar,
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Paper,
-  Divider,
-  Chip,
-} from "@mui/material";
+import { Avatar, Box, Container, Stack, Typography, Paper, Divider, Chip } from "@mui/material";
+import { BackButton } from "../../components/BackButton";
 
 export function Profile() {
   const { user } = useAuth0();
@@ -17,12 +9,10 @@ export function Profile() {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8 }}>
+      <BackButton />
       <Paper elevation={4} sx={{ p: 4, borderRadius: 4 }}>
         <Stack direction="column" spacing={3} alignItems="center">
-          <Avatar
-            src={user.picture}
-            sx={{ width: 100, height: 100, border: "3px solid #1976d2" }}
-          />
+          <Avatar src={user.picture} sx={{ width: 100, height: 100, border: "3px solid #1976d2" }} />
           <Box textAlign="center">
             <Typography variant="h5" fontWeight="bold">
               {user.name}

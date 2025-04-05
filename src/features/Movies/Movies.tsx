@@ -5,6 +5,7 @@ import { MoviesFilter } from "./MoviesFilter";
 import MovieCard from "./MovieCard";
 import { useGetMoviesQuery, useGetConfigurationQuery, MoviesQuery } from "../../services/tmdb";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BackButton } from "../../components/BackButton";
 
 const initialQuery: MoviesQuery = {
   page: 1,
@@ -35,49 +36,54 @@ export default function Movies() {
   const [targetRef] = useIntersectionObserver({ onIntersect });
 
   const handleAddToFavorites = useCallback(
-    (id: number) => { alert(`Not implemented! Action: ${user?.name} is adding movie ${id} to favorites.`) },
-    [user?.name]
+    (id: number) => {
+      alert(`Not implemented! Action: ${user?.name} is adding movie ${id} to favorites.`);
+    },
+    [user?.name],
   );
 
   return (
-    <Grid container spacing={2} sx={{ flexWrap: "nowrap" }}>
-      <Grid item xs="auto">
-        <MoviesFilter
-          onApply={(filters) => {
-            const moviesFilters = {
-              keywords: filters?.keywords.map((k) => k.id),
-              genres: filters?.genres,
-            };
+    <>
+      <BackButton />
+      <Grid container spacing={2} sx={{ flexWrap: "nowrap" }}>
+        <Grid item xs="auto">
+          <MoviesFilter
+            onApply={(filters) => {
+              const moviesFilters = {
+                keywords: filters?.keywords.map((k) => k.id),
+                genres: filters?.genres,
+              };
 
-            setQuery({
-              page: 1,
-              filters: moviesFilters,
-            });
-          }}
-        />
+              setQuery({
+                page: 1,
+                filters: moviesFilters,
+              });
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Container sx={{ py: 8 }} maxWidth="lg">
+            {!isFetching && !movies?.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
+            <Grid container spacing={4}>
+              {movies?.map((m) => (
+                <Grid item key={m.id} xs={12} sm={6} md={4}>
+                  <MovieCard
+                    key={m.id}
+                    id={m.id}
+                    title={m.title}
+                    overview={m.overview}
+                    popularity={m.popularity}
+                    image={formatImageUrl(m.backdrop_path ?? undefined)}
+                    enableUserActions={isAuthenticated}
+                    onAddFavorite={handleAddToFavorites}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <div ref={targetRef}>{isFetching && <LinearProgress color="secondary" sx={{ mt: 3 }} />}</div>
+          </Container>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Container sx={{ py: 8 }} maxWidth="lg">
-          {!isFetching && !movies?.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
-          <Grid container spacing={4}>
-            {movies?.map((m) => (
-              <Grid item key={m.id} xs={12} sm={6} md={4}>
-                <MovieCard
-                  key={m.id}
-                  id={m.id}
-                  title={m.title}
-                  overview={m.overview}
-                  popularity={m.popularity}
-                  image={formatImageUrl(m.backdrop_path ?? undefined)}
-                  enableUserActions={isAuthenticated}
-                  onAddFavorite={handleAddToFavorites}
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <div ref={targetRef}>{isFetching && <LinearProgress color="secondary" sx={{ mt: 3 }} />}</div>
-        </Container>
-      </Grid>
-    </Grid>
+    </>
   );
 }

@@ -50,6 +50,13 @@ export interface Genre {
   name: string;
 }
 
+export interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  profile_path?: string | null;
+}
+
 export const tmdbApi = createApi({
   reducerPath: "tmdbApi",
   baseQuery: fetchBaseQuery({
@@ -61,8 +68,18 @@ export const tmdbApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    // getConfiguration: builder.query<Configuration, void>({
+    //   query: () => "/configuration",
+    // }),
+
     getConfiguration: builder.query<Configuration, void>({
       query: () => "/configuration",
+      transformResponse: (response: Configuration) => {
+        if (response.images.base_url.startsWith("http://")) {
+          response.images.base_url = response.images.base_url.replace("http://", "https://");
+        }
+        return response;
+      },
     }),
 
     getMovies: builder.query<MoviesState, MoviesQuery>({
@@ -119,7 +136,20 @@ export const tmdbApi = createApi({
     getMovieDetails: builder.query<MovieDetails, number>({
       query: (id) => `/movie/${id}`,
     }),
+    getMovieCredits: builder.query<{ cast: CastMember[] }, number>({
+      query: (id) => `/movie/${id}/credits`,
+      transformResponse: (response: { cast: CastMember[] }) => ({
+        cast: response.cast,
+      }),
+    }),
   }),
 });
 
-export const { useGetConfigurationQuery, useGetGenresQuery, useGetKeywordsQuery, useGetMoviesQuery, useGetMovieDetailsQuery, } = tmdbApi;
+export const {
+  useGetConfigurationQuery,
+  useGetGenresQuery,
+  useGetKeywordsQuery,
+  useGetMoviesQuery,
+  useGetMovieDetailsQuery,
+  useGetMovieCreditsQuery,
+} = tmdbApi;
